@@ -1,0 +1,23 @@
+linters:
+  enable:
+    - errcheck 
+    - gosimple 
+    - govet 
+    - ineffassign 
+    - unused 
+    - bodyclose 
+    - copyloopvar 
+    - dupword 
+    - durationcheck 
+    - gofmt 
+    - govet 
+    - revive 
+    - staticcheck 
+    - gosec
+    - funlen
+    - iface
+    - nestif
+    - misspell
+    - nolintlint
+    - tagalign
+    - unconvert

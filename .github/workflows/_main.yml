@@ -1,0 +1,13 @@
+name: Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  StaticAnalysis:
+    uses: EncoreDigitalGroup/ci-workflows/.github/workflows/go_staticAnalysis.yml@v2
+    with:
+      branch: "main"
+      goVersion: "1.21.1"
