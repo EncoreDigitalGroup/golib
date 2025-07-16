@@ -1,23 +1,36 @@
+version: "2"
 linters:
   enable:
-    - errcheck 
-    - gosimple 
-    - govet 
-    - ineffassign 
-    - unused 
-    - bodyclose 
-    - copyloopvar 
-    - dupword 
-    - durationcheck 
-    - gofmt 
-    - govet 
-    - revive 
-    - staticcheck 
-    - gosec
+    - bodyclose
+    - copyloopvar
+    - dupword
+    - durationcheck
     - funlen
+    - gosec
     - iface
-    - nestif
     - misspell
+    - nestif
     - nolintlint
+    - revive
     - tagalign
     - unconvert
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
