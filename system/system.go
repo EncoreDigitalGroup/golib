@@ -7,6 +7,7 @@ package system
 
 import (
 	"net"
+	"runtime"
 	"time"
 )
 
@@ -21,6 +22,18 @@ func InternetConnected() bool {
 	}
 
 	return dns
+}
+
+func IsWindows() bool {
+	return runtime.GOOS == "windows"
+}
+
+func IsMac() bool {
+	return runtime.GOOS == "darwin"
+}
+
+func IsLinux() bool {
+	return runtime.GOOS == "linux"
 }
 
 func checkDNSConnection(dns string) bool {
