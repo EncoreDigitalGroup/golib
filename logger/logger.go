@@ -6,18 +6,81 @@
 package logger
 
 import (
+	"os"
+
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/log"
-	"os"
 )
 
+type Backend interface {
+	Print(msg string, keyvals ...interface{})
+	Printf(format string, keyvals ...interface{})
+	Info(msg string, keyvals ...interface{})
+	Infof(format string, args ...interface{})
+	Error(msg string, keyvals ...interface{})
+	Errorf(format string, args ...interface{})
+	Debug(msg string, keyvals ...interface{})
+	Debugf(format string, args ...interface{})
+	Warn(msg string, keyvals ...interface{})
+	Warnf(format string, args ...interface{})
+}
+
 type Logger struct {
+	backend Backend
+	slogger interface{} // Stores *slog.Logger when using slog backend
+}
+
+type charmLogger struct {
 	*log.Logger
+}
+
+func (c *charmLogger) Print(msg string, keyvals ...interface{}) {
+	c.Logger.Print(msg, keyvals...)
+}
+
+func (c *charmLogger) Printf(format string, keyvals ...interface{}) {
+	c.Logger.Printf(format, keyvals...)
+}
+
+func (c *charmLogger) Info(msg string, keyvals ...interface{}) {
+	c.Logger.Info(msg, keyvals...)
+}
+
+func (c *charmLogger) Infof(format string, args ...interface{}) {
+	c.Logger.Infof(format, args...)
+}
+
+func (c *charmLogger) Error(msg string, keyvals ...interface{}) {
+	c.Logger.Error(msg, keyvals...)
+}
+
+func (c *charmLogger) Errorf(format string, args ...interface{}) {
+	c.Logger.Errorf(format, args...)
+}
+
+func (c *charmLogger) Debug(msg string, keyvals ...interface{}) {
+	c.Logger.Debug(msg, keyvals...)
+}
+
+func (c *charmLogger) Debugf(format string, args ...interface{}) {
+	c.Logger.Debugf(format, args...)
+}
+
+func (c *charmLogger) Warn(msg string, keyvals ...interface{}) {
+	c.Logger.Warn(msg, keyvals...)
+}
+
+func (c *charmLogger) Warnf(format string, args ...interface{}) {
+	c.Logger.Warnf(format, args...)
 }
 
 var Default = New()
 
 func New() *Logger {
+	return newCharmLogger()
+}
+
+func newCharmLogger() *Logger {
 	styles := log.DefaultStyles()
 
 	styles.Levels[log.ErrorLevel] = lipgloss.NewStyle().
@@ -32,7 +95,50 @@ func New() *Logger {
 	l := log.New(os.Stdout)
 	l.SetStyles(styles)
 
-	return &Logger{l}
+	return &Logger{
+		backend: &charmLogger{l},
+		slogger: nil,
+	}
+}
+
+func (l *Logger) Print(msg string, keyvals ...interface{}) {
+	l.backend.Print(msg, keyvals...)
+}
+
+func (l *Logger) Printf(format string, keyvals ...interface{}) {
+	l.backend.Printf(format, keyvals...)
+}
+
+func (l *Logger) Info(msg string, keyvals ...interface{}) {
+	l.backend.Info(msg, keyvals...)
+}
+
+func (l *Logger) Infof(format string, args ...interface{}) {
+	l.backend.Infof(format, args...)
+}
+
+func (l *Logger) Error(msg string, keyvals ...interface{}) {
+	l.backend.Error(msg, keyvals...)
+}
+
+func (l *Logger) Errorf(format string, args ...interface{}) {
+	l.backend.Errorf(format, args...)
+}
+
+func (l *Logger) Debug(msg string, keyvals ...interface{}) {
+	l.backend.Debug(msg, keyvals...)
+}
+
+func (l *Logger) Debugf(format string, args ...interface{}) {
+	l.backend.Debugf(format, args...)
+}
+
+func (l *Logger) Warn(msg string, keyvals ...interface{}) {
+	l.backend.Warn(msg, keyvals...)
+}
+
+func (l *Logger) Warnf(format string, args ...interface{}) {
+	l.backend.Warnf(format, args...)
 }
 
 func Print(msg string, keyvals ...interface{}) {

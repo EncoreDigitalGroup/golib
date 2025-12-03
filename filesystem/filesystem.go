@@ -40,6 +40,8 @@ func (cd *CopyDirectory) CountFiles(directory string) (int, error) {
 }
 
 // CopyFilesAndDirectory copies files and directories, sending progress updates via a channel
+//
+//nolint:funlen
 func (cd *CopyDirectory) CopyFilesAndDirectory(sourceDirectory, destinationDirectory string, progressChan chan struct{}) (int, error) {
 	// Check if the destination exists
 	if _, err := os.Stat(destinationDirectory); os.IsNotExist(err) {
@@ -71,7 +73,7 @@ func (cd *CopyDirectory) CopyFilesAndDirectory(sourceDirectory, destinationDirec
 		sourcePath := filepath.Join(sourceDirectory, entry.Name())
 		destinationPath := filepath.Join(destinationDirectory, entry.Name())
 
-		if entry.IsDir() {
+		if entry.IsDir() { //nolint:nestif
 			// Handle subdirectories concurrently
 			waitGroup.Add(1)
 			go func(src, dst string) {
@@ -169,6 +171,8 @@ func (cd *CopyDirectory) Copy(source, destination string) (int, error) {
 }
 
 // CopyMultipleSources copies multiple sources to a destination with progress
+//
+//nolint:funlen
 func (cd *CopyDirectory) CopyMultipleSources(sources []string, destination string) (int, error) {
 	// Count total files across all sources first
 	totalFiles := 0
