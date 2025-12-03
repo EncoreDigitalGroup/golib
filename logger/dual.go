@@ -1,8 +1,13 @@
+//go:build experimental
+
 /*
  * Copyright (c) 2025. Encore Digital Group.
  * All Rights Reserved.
  */
 
+// Package logger provides experimental dual backend functionality.
+// This is experimental and may change in future versions.
+// To enable experimental features, build with: go build -tags experimental
 package logger
 
 import (
