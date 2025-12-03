@@ -71,7 +71,7 @@ func (cd *CopyDirectory) CopyFilesAndDirectory(sourceDirectory, destinationDirec
 		sourcePath := filepath.Join(sourceDirectory, entry.Name())
 		destinationPath := filepath.Join(destinationDirectory, entry.Name())
 
-		if entry.IsDir() {
+		if entry.IsDir() { //nolint:nestif
 			// Handle subdirectories concurrently
 			waitGroup.Add(1)
 			go func(src, dst string) {
