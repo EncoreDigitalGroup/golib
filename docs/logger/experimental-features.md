@@ -1,3 +1,8 @@
+---
+title: Experimental Features
+sidebar_position: 2
+---
+
 # Experimental Features
 
 This package contains experimental features that are subject to change in future versions. Experimental features do

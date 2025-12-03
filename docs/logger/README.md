@@ -1,3 +1,8 @@
+---
+title: Overview
+sidebar_position: 1
+---
+
 # Logger Package
 
 A flexible logging package for Go applications that provides styled terminal output using charmbracelet/log with
