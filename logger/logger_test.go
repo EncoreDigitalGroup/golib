@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestBackwardsCompatibility(t *testing.T) {
+func TestBackwardsCompatibility(_ *testing.T) {
 	// Test that all existing functions still work
 	Print("test print")
 	Printf("test printf %s", "value")
@@ -30,7 +30,7 @@ func TestNewLogger(t *testing.T) {
 	logger1.Error("test error", "key", "value")
 }
 
-func TestLoggerMethods(t *testing.T) {
+func TestLoggerMethods(_ *testing.T) {
 	logger := New()
 
 	// Test all logger instance methods
