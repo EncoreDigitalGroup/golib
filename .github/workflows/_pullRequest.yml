@@ -1,11 +1,34 @@
 name: Pull Request
 
 on:
-  pull_request_target:
+  pull_request:
+
+env:
+  GO_VERSION: "1.24.1"
+
+concurrency:
+    group: ${{ github.repository }}-${{ github.event.pull_request.number }}-pullRequest
+    cancel-in-progress: true
 
 jobs:
   StaticAnalysis:
     uses: EncoreDigitalGroup/ci-workflows/.github/workflows/go_staticAnalysis.yml@v2
     with:
       branch: "${{ github.head_ref }}"
-      goVersion: "1.24.1"
+      goVersion: ${{ env.GO_VERSION }}
+
+  Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Run tests
+        run: go test -v ./...
